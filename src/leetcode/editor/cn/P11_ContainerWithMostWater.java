@@ -64,6 +64,11 @@ class ContainerWithMostWater {
     //leetcode submit region begin(Prohibit modification and deletion)
     class Solution {
         public int maxArea(int[] height) {
+            return maxArea_DoublePointer(height);
+//            return maxArea_DP(height);
+        }
+
+        private int maxArea_DoublePointer(int[] height) {
             int ans = 0;
             int l = 0;
             int r = height.length - 1;
@@ -78,7 +83,12 @@ class ContainerWithMostWater {
             return ans;
         }
 
-        private int myMethod(int[] height) {
+        /**
+         * 因为 0 <= height[i] <= 10^4，所以创建dp数组内存会超出限制
+         * @param height
+         * @return
+         */
+        private int maxArea_DP(int[] height) {
             int size = height.length;
             if (size < 2) {
                 return 0;

@@ -45,8 +45,6 @@
 
 package leetcode.editor.cn;
 
-import com.sun.istack.internal.NotNull;
-
 class LongestPalindromicSubstring {
     public static void main(String[] args) {
         Solution solution = new LongestPalindromicSubstring().new Solution();
@@ -60,23 +58,27 @@ class LongestPalindromicSubstring {
     //leetcode submit region begin(Prohibit modification and deletion)
     class Solution {
         public String longestPalindrome(String s) {
-            if (s == null) {
-                return null;
-            }
+//            return longestPalindrome_DP(s);
+            return longestPalindrome_Expand(s);
+        }
 
-            int size = s.length();
-            if (size < 2) {
-                System.out.println("longestPalindrome: "+s+" -> "+ s);
+        private String longestPalindrome_DP(String s) {
+            if (s == null || s.length() == 1) {
+//                System.out.println("longestPalindrome: "+s+" -> "+ s);
                 return s;
             }
 
+            int size = s.length();
             int start = 0;
             int maxLength = 1;
+
+            // dp[i][j] : s(i..j)为回文串时为true，否则false
             boolean[][] dp = new boolean[size][size];
             for (int i = 0; i < size; i++) {
                 dp[i][i] = true;
             }
 
+            // 先枚举字串长度
             for (int l = 1; l <= size; l++) {
                 for (int i = 0; i < size - 1; i++) {
                     int j = i + l;
@@ -100,10 +102,43 @@ class LongestPalindromicSubstring {
                 }
             }
             String substring = s.substring(start, start + maxLength);
-            System.out.println("longestPalindrome: "+s+" -> "+ substring);
+//            System.out.println("longestPalindrome: "+s+" -> "+ substring);
             return substring;
         }
 
+        private String longestPalindrome_Expand(String s) {
+            if (s == null || s.length() == 1) {
+                return s;
+            }
+
+            int start = 0, end = 0;
+            for (int i = 0; i < s.length(); i++) {
+                int length = Math.max(
+                        expandAroundCenter(s, i, i),
+                        expandAroundCenter(s, i, i + 1)
+                );
+                if (length > end - start + 1) {
+                    if (length % 2 == 0) {
+                        start = i - length / 2 + 1;
+                    } else {
+                        start = i - length / 2;
+                    }
+                    end = i + length / 2;
+                }
+            }
+            return s.substring(start, end + 1);
+        }
+
+        private int expandAroundCenter(String s, int left, int right) {
+            int length = 0;
+            while (left >= 0 && right < s.length() &&
+                    s.charAt(left) == s.charAt(right)) {
+                length = right - left + 1;
+                left--;
+                right++;
+            }
+            return length;
+        }
     }
 //leetcode submit region end(Prohibit modification and deletion)
 

@@ -70,15 +70,23 @@ class ZigzagConversion {
             if (numRows <= 1) {
                 return s;
             }
-//            return firstMethod(s, numRows);
-            return secondMethod(s, numRows);
+            return firstMethod(s, numRows);
+//            return secondMethod(s, numRows);
         }
 
+        /**
+         * 执行耗时:4 ms,击败了81.80% 的Java用户
+         * 内存消耗:38.9 MB,击败了51.04% 的Java用户
+         * @param s
+         * @param numRows
+         * @return
+         */
         private String firstMethod(String s, int numRows) {
             StringBuilder[] arrays = new StringBuilder[numRows];
             for (int i = 0; i < numRows; i++) {
                 arrays[i] = new StringBuilder();
             }
+
             int rowIndex = 1;
             boolean isDown = true;
             int size = s.length();
@@ -94,7 +102,7 @@ class ZigzagConversion {
             for (int i = 0; i < numRows; i++) {
                 ans.append(arrays[i]);
             }
-            System.out.println("convert [" + s + "] : " + ans.toString());
+//            System.out.println("convert [" + s + "] : " + ans.toString());
             return ans.toString();
         }
 
@@ -106,6 +114,12 @@ class ZigzagConversion {
             }
         }
 
+        /**
+         * 找规律
+         * @param s
+         * @param numRows
+         * @return
+         */
         public String secondMethod(String s, int numRows) {// 6
             StringBuilder ans = new StringBuilder();
             int totalTrans = (numRows - 1) * 2; //10

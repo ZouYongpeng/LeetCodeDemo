@@ -46,8 +46,6 @@
 
 package leetcode.editor.cn;
 
-import javax.xml.transform.SourceLocator;
-
 class ReverseInteger {
     public static void main(String[] args) {
         Solution solution = new ReverseInteger().new Solution();
@@ -57,15 +55,8 @@ class ReverseInteger {
     //leetcode submit region begin(Prohibit modification and deletion)
     class Solution {
 
-        private final int MIN_LIMIT = -214748364;
-        private final int MAX_LIMIT = 214748364;
-
         public int reverse(int x) {
             int ans = 0;
-//            System.out.println("reverse : " +
-//                    "\nmin = "+Integer.MIN_VALUE+", max = "+Integer.MAX_VALUE+"" +
-//                    "\nInteger.MIN_VALUE / 10 = "+Integer.MIN_VALUE / 10+", Integer.MAX_VALUE / 10 = "+Integer.MAX_VALUE / 10+
-//                    "\nInteger.MIN_VALUE % 10 = "+Integer.MIN_VALUE % 10+", Integer.MAX_VALUE % 10 = "+Integer.MAX_VALUE % 10);
             while (x != 0) {
                 int temp = x % 10;
                 if (isOut(ans, temp)) {
@@ -78,10 +69,12 @@ class ReverseInteger {
         }
 
         private boolean isOut(int num, int temp) {
-            return num > Integer.MAX_VALUE / 10 ||
-                    (num == Integer.MAX_VALUE / 10 && temp > Integer.MAX_VALUE % 10) ||
-                    num < Integer.MIN_VALUE / 10 ||
-                    (num == Integer.MIN_VALUE / 10 && temp < Integer.MIN_VALUE % 10);
+            long value = num * 10L + temp;
+            return value < Integer.MIN_VALUE || value > Integer.MAX_VALUE;
+//            return num > Integer.MAX_VALUE / 10 ||
+//                    (num == Integer.MAX_VALUE / 10 && temp > Integer.MAX_VALUE % 10) ||
+//                    num < Integer.MIN_VALUE / 10 ||
+//                    (num == Integer.MIN_VALUE / 10 && temp < Integer.MIN_VALUE % 10);
         }
 
     }

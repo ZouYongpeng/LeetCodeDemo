@@ -45,6 +45,9 @@ package leetcode.editor.cn;
 
 import leetcode.editor.cn.base.ListNode;
 
+import static leetcode.editor.cn.base.ListNode.createListNode;
+import static leetcode.editor.cn.base.ListNode.printfListNode;
+
 class AddTwoNumbers {
     public static void main(String[] args) {
         Solution solution = new AddTwoNumbers().new Solution();
@@ -57,51 +60,17 @@ class AddTwoNumbers {
     private static void doCalculate(Solution solution, int[] firstArray, int[] secondArray) {
         ListNode l1 = createListNode(firstArray);
         ListNode l2 = createListNode(secondArray);
-        System.out.println("");
         printfListNode(l1);
         printfListNode(l2);
         ListNode l3 = solution.addTwoNumbers(l1, l2);
         printfListNode(l3);
     }
 
-    private static ListNode createListNode(int[] nums) {
-        ListNode listNode = new ListNode();
-        ListNode node = listNode;
-        for (int i = 0; i < nums.length; i++) {
-            node.val = nums[i];
-            node.next = i == (nums.length - 1) ? null : new ListNode();
-            node = node.next;
-        }
-        return listNode;
-    }
-
-    private static void printfListNode(ListNode listNode) {
-        StringBuilder stringBuilder = new StringBuilder();
-        while (listNode != null) {
-            stringBuilder.append(listNode.val);
-            stringBuilder.append(listNode.next == null ? "" : "->");
-            listNode = listNode.next;
-        }
-        System.out.println("printfListNode : "+stringBuilder.toString());
-    }
-
-
     //leetcode submit region begin(Prohibit modification and deletion)
-
-    /**
-     * Definition for singly-linked list.
-     * public class leetcode.editor.cn.base.ListNode {
-     * int val;
-     * leetcode.editor.cn.base.ListNode next;
-     * leetcode.editor.cn.base.ListNode() {}
-     * leetcode.editor.cn.base.ListNode(int val) { this.val = val; }
-     * leetcode.editor.cn.base.ListNode(int val, leetcode.editor.cn.base.ListNode next) { this.val = val; this.next = next; }
-     * }
-     */
     class Solution {
         public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
             ListNode node = new ListNode();
-            ListNode result = node;
+            ListNode ans = node;
             int ext = 0;
             while (l1 != null || l2 != null) {
                 ListNode newNode = add(l1, l2, ext);
@@ -118,7 +87,7 @@ class AddTwoNumbers {
                 }
                 node = node.next;
             }
-            return result;
+            return ans;
         }
 
         public ListNode add(ListNode l1, ListNode l2, int ext) {

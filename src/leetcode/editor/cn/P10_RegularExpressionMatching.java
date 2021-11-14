@@ -73,22 +73,23 @@ class RegularExpressionMatching {
         public boolean isMatch(String s, String p) {
             int size_s = s.length();
             int size_p = p.length();
+            // dp[i][j] : s(0..i)和p(0..j)能匹配成功
             boolean[][] dp = new boolean[size_s + 1][size_p + 1];
             dp[0][0] = true;
 
             for (int i = 0; i <= size_s; i++) {
                 for (int j = 1; j <= size_p; j++) {
-                    if (p.charAt(j-1) == '*') {
-                        if (isMatch(s, i, p, j-1)) {
+                    if (p.charAt(j - 1) == '*') {
+                        if (isMatch(s, i, p, j - 1)) {
                             // * 匹配零次或多次
-                            dp[i][j] = dp[i][j-2] | dp[i-1][j];
+                            dp[i][j] = dp[i][j - 2] | dp[i - 1][j];
                         } else {
                             // * 匹配零次
-                            dp[i][j] = dp[i][j-2];
+                            dp[i][j] = dp[i][j - 2];
                         }
                     } else {
                         if (isMatch(s, i, p, j)) {
-                            dp[i][j] = dp[i-1][j-1];
+                            dp[i][j] = dp[i - 1][j - 1];
                         }
                     }
                 }
